@@ -1,4 +1,3 @@
-var THREE = require('three');
 var voxel = require('voxel');
 var ChunkMatrix = require('./lib/chunk_matrix');
 
@@ -35,7 +34,7 @@ Group.prototype.create = function (generate) {
     
 Group.prototype.createBlock = function (start, d, pos, val) {
     var self = this
-    var T = self.THREE
+    var T = self.game.THREE
     var size = self.cubeSize
     
     var ray = new T.Raycaster(start, d)
