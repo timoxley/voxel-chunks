@@ -18,10 +18,7 @@ function Group (game) {
 
 Group.prototype.create = function (generate) {
     var self = this;
-    if (chunks && !Array.isArray(chunks)) {
-        chunks = [ chunks ];
-    }
-    var cm = new ChunkMatrix(self.game, chunks);
+    var cm = new ChunkMatrix(self.game, generate);
     cm.on('add', function (id) {
         self.chunkMatricies[id] = cm;
     });
