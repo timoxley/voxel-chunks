@@ -75,13 +75,13 @@ Group.prototype.createBlock = function (start, d, pos, val) {
     })(0)
 }
 
-Game.prototype.setBlock = function (pos, val) {
+Group.prototype.setBlock = function (pos, val) {
     var ix = this.getIndex(pos);
     var vm = this.chunkMatricies[ix.matrix];
     return cm.setByIndex(ix.chunk, ix.voxel, val);
 };
 
-Game.prototype.getBlock = function (pos) {
+Group.prototype.getBlock = function (pos) {
     var ix = this.getIndex(pos);
     var vm = this.chunkMatricies[ix.matrix];
     return cm.getByIndex(ix.chunk, ix.voxel);
