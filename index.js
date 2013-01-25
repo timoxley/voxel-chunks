@@ -1,12 +1,6 @@
 var voxel = require('voxel');
 var ChunkMatrix = require('./lib/chunk_matrix');
 
-function createEmptyChunk () {
-    var low = [0,0,0], high = [32,32,32]
-    var zeros = function (x,y,z) { return 0 }
-    return voxel.generate(low, high, zeros)
-}
-
 module.exports = Group;
 
 function Group (game) {
@@ -70,7 +64,7 @@ Group.prototype.createBlock = function (start, d, pos, val) {
         }
         else draw(offset + 0.1)
     })(0)
-}
+};
 
 Group.prototype.setBlock = function (pos, val) {
     var ix = this.getIndex(pos);
