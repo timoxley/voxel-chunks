@@ -22,7 +22,7 @@ Group.prototype.create = function (generate) {
     self.chunkMatricies.push(cm);
     return cm;
 };
-    
+ 
 Group.prototype.createBlock = function (start, d, pos, val) {
     var self = this
     var T = self.game.THREE
@@ -68,13 +68,20 @@ Group.prototype.createBlock = function (start, d, pos, val) {
 
 Group.prototype.setBlock = function (pos, val) {
     var ix = this.getIndex(pos);
-    var vm = this.chunkMatricies[ix.matrix];
+    var cm;
+    if (!ix) {
+        cm = new ChunkMatrix(this.game, this.generate);
+        this.chunkMatricies.push(cm);
+        cm.generateChunk('0|0|0');
+        ix = this.getIndex(pos);
+    }
+    else cm = this.chunkMatricies[ix.matrix];
     return cm.setByIndex(ix.chunk, ix.voxel, val);
 };
 
 Group.prototype.getBlock = function (pos) {
     var ix = this.getIndex(pos);
-    var vm = this.chunkMatricies[ix.matrix];
+    var cm = this.chunkMatricies[ix.matrix];
     return cm.getByIndex(ix.chunk, ix.voxel);
 };
 
@@ -100,9 +107,9 @@ Group.prototype.getIndex = function (pos) {
 Group.prototype._chunkIndex = function (pos) {
     var chunkSize = this.game.chunkSize;
     var cubeSize = this.game.cubeSize;
-    var cx = position.x / cubeSize / chunkSize;
-    var cy = position.y / cubeSize / chunkSize;
-    var cz = position.z / cubeSize / chunkSize;
+    var cx = pos.x / cubeSize / chunkSize;
+    var cy = pos.y / cubeSize / chunkSize;
+    var cz = pos.z / cubeSize / chunkSize;
     var ckey = [ Math.floor(cx), Math.floor(cy), Math.floor(cz) ];
     return ckey.join('|');
 };
@@ -120,6 +127,9 @@ Group.prototype._voxelIndex = function (pos) {
 };
 
 Group.prototype._matrixIndex = function (pos) {
+    var T = this.game.THREE;
+    if (this.chunkMatricies.length) return 0;
+    
     for (var i = 0; i < this.chunkMatricies.length; i++) {
         var cm = this.chunkMatricies[i];
         var mr = new T.Matrix4().getInverse(cm.rotationObject.matrix);
@@ -128,7 +138,8 @@ Group.prototype._matrixIndex = function (pos) {
         var tr = m.multiplyVector3(pos);
         var ci = this._chunkIndex(tr);
         var vi = this._voxelIndex(tr);
-        if (cm.chunks[ci].voxels[vi] !== 0) return i;
+        
+        if (cm.chunks[ci] && cm.chunks[ci].voxels[vi] !== 0) return i;
     }
     return -1;
 };
