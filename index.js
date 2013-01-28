@@ -13,8 +13,9 @@ function Group (game) {
 Group.prototype.create = function (generate) {
     var self = this;
     var cm = new ChunkMatrix(self.game, generate);
-    cm.on('add', function (id) {
-        self.chunkMatricies[id] = cm;
+    cm.on('add', function (mesh) {
+        self.chunkMatricies[mesh.id] = cm;
+        self.meshes.push(mesh);
     });
     cm.on('remove', function (id) {
         delete self.chunkMatricies[id];
@@ -26,10 +27,10 @@ Group.prototype.create = function (generate) {
 Group.prototype.createBlock = function (start, d, pos, val) {
     var self = this
     var T = self.game.THREE
-    var size = self.cubeSize
+    var size = self.game.cubeSize
     
     var ray = new T.Raycaster(start, d)
-    var intersections = ray.intersectObjects(self.detached.meshes)
+    var intersections = ray.intersectObjects(self.meshes)
     
     if (intersections.length === 0) return false;
     
