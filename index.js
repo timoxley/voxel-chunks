@@ -75,15 +75,15 @@ Group.prototype.getBlock = function (pos) {
 
 Group.prototype.getIndex = function (pos) {
     var T = this.game.THREE;
-    var cm = this.chunkMatricies[mi];
+    var cm = pos.chunkMatrix;
     
     var mr = new T.Matrix4().getInverse(cm.rotationObject.matrix);
     var mt = new T.Matrix4().getInverse(cm.translationObject.matrix);
     var m = new T.Matrix4().multiply(mt, mr);
     
     var tr = m.multiplyVector3(pos);
-    var ci = self.indexer.chunk(tr);
-    var vi = self.indexer.voxel(tr);
+    var ci = this.indexer.chunk(tr);
+    var vi = this.indexer.voxel(tr);
     
     return { chunk: ci, voxel: vi };
 };

@@ -1,6 +1,6 @@
 {
     "name": "voxel-chunks",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "detached voxel chunk geometries with independent matrix translations",
     "main": "index.js",
     "dependencies": {
