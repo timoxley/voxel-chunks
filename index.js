@@ -36,7 +36,7 @@ Group.prototype.createBlock = function (pos, val) {
     
     var mr = new T.Matrix4().getInverse(cm.rotationObject.matrix);
     var mt = new T.Matrix4().getInverse(cm.translationObject.matrix);
-    var m = new T.Matrix4().multiply(mt, mr);
+    var m = new T.Matrix4().multiply(mr, mt);
     
     
     return (function draw (offset) {
