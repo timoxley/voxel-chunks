@@ -4,7 +4,7 @@
     "description": "detached voxel chunk geometries with independent matrix translations",
     "main": "index.js",
     "dependencies": {
-        "voxel-mesh": "~0.1.0",
+        "voxel-mesh": "~0.2.0",
         "voxel": "~0.1.1",
         "inherits": "~1.0.0"
     },
